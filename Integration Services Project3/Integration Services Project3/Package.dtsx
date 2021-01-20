@@ -1,0 +1,119 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/10/2020 9:41:21 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="BP4-W-035"
+  DTS:CreatorName="BP4\karibel.barco"
+  DTS:DTSID="{81681212-EFF6-4AA3-9F28-98FF21356752}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.132"
+  DTS:LocaleID="11274"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="2"
+  DTS:VersionGUID="{A20B8227-43E0-45A5-9AC3-418613ED77B0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost\SQLEXPRESS]"
+      DTS:CreationName="SMOServer"
+      DTS:DTSID="{41445179-298A-4413-BC54-3C98E0CF2E60}"
+      DTS:ObjectName="localhost\SQLEXPRESS">
+      <DTS:ObjectData>
+        <SMOServerConnectionManager
+          ConnectionString="SqlServerName=localhost\SQLEXPRESS;UseWindowsAuthentication=True;UserName=;"
+          ConnectByProxy="False" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F74C1BD6-5F60-437A-A7FB-614C2B3AFD2F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TableName">
+      <DTS:VariableValue
+        DTS:DataType="8">Default</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Foreach table in database"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Contenedor de bucles Foreach"
+      DTS:DTSID="{2E4F2DFE-4F88-430C-AC18-1D78FE5E4C0D}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach table in database">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachSMOEnumerator"
+        DTS:DTSID="{781A4F70-AF1C-412E-9A2D-E4EEDD689FA4}"
+        DTS:ObjectName="{781A4F70-AF1C-412E-9A2D-E4EEDD689FA4}">
+        <DTS:ObjectData>
+          <FEESMO
+            EnumURN="RuntimeServer[@Connection='{41445179-298A-4413-BC54-3C98E0CF2E60}']/Server[@Name='localhost\SQLEXPRESS']/Database[@Name='PracticaSSIS']/SMOEnumObj[@Name='Tables']/SMOEnumType[@Name='Names']" />
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach table in database\Dump table data to csv file"
+          DTS:CreationName="Microsoft.ExecuteProcess"
+          DTS:Description="Tarea Ejecutar proceso"
+          DTS:DTSID="{3D709192-E22D-43E0-B51F-535FC51F4AA1}"
+          DTS:ExecutableType="Microsoft.ExecuteProcess"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Dump table data to csv file"
+          DTS:TaskContact="Execute Process Task;Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:PropertyExpression
+            DTS:Name="Arguments">"-d PracticaSSIS -E -o \"C:\\Users\\karibel.barco\\Desktop\\" +  @[User::TableName] + ".csv\" -Q\"SETNOCOUNT ON; SELECT * FROM PracticaSSIS.dbo.["+ @[User::TableName] +"]\" -s \",\" -W"</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <ExecuteProcessData
+              Executable="C:\Program Files\Microsoft SQL Server\150\Tools\Binn\OSQL.EXE"
+              Arguments="-d PracticaSSIS -E -o &quot;C:\Users\karibel.barco\Desktop\Default.csv&quot; -Q&quot;SETNOCOUNT ON; SELECT * FROM PracticaSSIS.dbo.[Default]&quot; -s &quot;,&quot; -W" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{0AEB3597-29E2-41F2-A80F-AEB2838069FE}"
+          DTS:ObjectName="{0AEB3597-29E2-41F2-A80F-AEB2838069FE}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::TableName" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
+<!--Si edita manualmente esta sección y comete un error, puede eliminarlo. -->
+<!--El paquete podrá cargarse normalmente, pero se perderá la información de diseño anterior y el diseñador reorganizará los elementos automáticamente en la superficie de diseño.-->
+<Objects
+  Version="8">
+  <!--Cada uno de los nodos siguientes contiene propiedades que no afectan al comportamiento en tiempo de ejecución.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="193,42"
+          Id="Package\Foreach table in database\Dump table data to csv file"
+          TopLeft="32,16" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="284,114"
+          Size="284,157"
+          Id="Package\Foreach table in database"
+          TopLeft="292,26" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
